@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
@@ -7,7 +7,8 @@ import FileContentScreen from "./screens/AsyncStorageData";
 import TasksList from "./screens/TasksList";
 import TaskDetails from "./screens/TaskDetails";
 import EditTask from "./screens/EditTask";
-import Settings from "./screens/settings";
+import Settings from "./screens/SettingsScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
