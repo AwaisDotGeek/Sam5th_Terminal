@@ -7,6 +7,7 @@ import FileContentScreen from "./screens/AsyncStorageData";
 import TasksList from "./screens/TasksList";
 import TaskDetails from "./screens/TaskDetails";
 import EditTask from "./screens/EditTask";
+import Settings from "./screens/settings";
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,11 @@ const App = () => {
           options={{ title: "Task Details" }}
         />
         <Stack.Screen
+          name="Settings"
+          component={Settings}
+          options={{ title: "Settings" }}
+        />
+        <Stack.Screen
           name="AsyncStorageData"
           component={FileContentScreen}
           options={{ title: "All Data" }}
@@ -65,6 +71,13 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigation.navigate("Tasks")}
       >
         <Text style={styles.buttonText}>Tasks</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Settings")}
+      >
+        <Text style={styles.buttonText}>Settings</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
