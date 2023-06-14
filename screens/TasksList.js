@@ -31,7 +31,7 @@ const TasksList = ({ navigation }) => {
   };
 
   const handleDetailsClick = (item) => {
-    navigation.navigate("TaskDetails", { item: item });
+    navigation.navigate("TaskDetails", { item: item, navigation });
   };
 
   const renderTaskItem = ({ item }) => {

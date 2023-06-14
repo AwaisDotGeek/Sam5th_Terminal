@@ -1,8 +1,13 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
-const TaskDetails = ({ route }) => {
+const TaskDetails = ({ route, navigation }) => {
   const { item } = route.params;
+
+  const handleEditThisItem = (item) => {
+    navigation.navigate("EditTask", { item: item, navigation });
+  };
+
   return (
     <View style={Styles.container}>
       <View style={Styles.innerContainer}>
@@ -18,7 +23,7 @@ const TaskDetails = ({ route }) => {
         <Text style={Styles.key}>priority</Text>
         <Text style={Styles.value}>{item.priority}</Text>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleEditThisItem(item)}>
           <Text style={Styles.button}>Edit This Item</Text>
         </TouchableOpacity>
       </View>
