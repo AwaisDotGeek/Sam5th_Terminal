@@ -51,7 +51,7 @@ const CreateTask = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text style={styles.title}>Task Details</Text>
+        <Text style={styles.title}>Enter Details</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter title here"
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
   innerContainer: {
     backgroundColor: "#fff",
     gap: 5,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 10,
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     letterSpacing: 0.5,
+    alignSelf: "flex-end",
   },
 });
 

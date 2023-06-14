@@ -27,7 +27,7 @@ const TasksList = ({ navigation }) => {
   }, []);
 
   const handleEditClick = (item) => {
-    navigation.navigate("EditTask", { item: item });
+    navigation.navigate("EditTask", { item: item, navigation });
   };
 
   const handleDetailsClick = (item) => {
@@ -56,17 +56,6 @@ const TasksList = ({ navigation }) => {
 
   return (
     <View style={Styles.container}>
-      <View style={[Styles.taskItem, { width: "95%", padding: 5 }]}>
-        <Text style={Styles.taskTitle}>Title</Text>
-        <Text style={Styles.taskTitle}>Due Date</Text>
-        <Text style={Styles.taskTitle}>Priority</Text>
-        <Text style={[Styles.taskTitle, { color: "limegreen", padding: 10 }]}>
-          Edit
-        </Text>
-        <Text style={[Styles.taskTitle, { color: "seagreen", padding: 10 }]}>
-          Details
-        </Text>
-      </View>
       <FlatList
         data={tasks}
         renderItem={renderTaskItem}
@@ -83,7 +72,7 @@ const Styles = StyleSheet.create({
     alignItems: "center",
   },
   flatList: {
-    width: "95%",
+    width: "98%",
     padding: 5,
   },
   taskItem: {

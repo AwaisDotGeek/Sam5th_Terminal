@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -7,14 +8,32 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const EditTask = ({ route }) => {
+const EditTask = ({ route, navigation }) => {
   const { item } = route.params;
   const [newTitle, setNewTitle] = useState(item.title);
   const [newDescription, setNewDescription] = useState(item.description);
   const [newDueDate, setNewDueDate] = useState(item.dueDate);
   const [newPriority, setNewPriority] = useState(item.priority);
 
-  const handleSaveChanges = () => {};
+  const handleSaveChanges = async () => {
+    try {
+      const fetchedData = await AsyncStorage.getItem("Tasks");
+      let tasks = JSON.parse(fetchedData);
+      tasks.forEach((task) => {
+        if (task.id == item.id) {
+          task.title = newTitle;
+          task.description = newDescription;
+          task.dueDate = newDueDate;
+          task.priority = newPriority;
+        }
+      });
+      await AsyncStorage.setItem("Tasks", JSON.stringify(tasks));
+      navigation.navigate("Home");
+      navigation.navigate("Tasks");
+    } catch (error) {
+      alert("Error saving changes! Error: ", error);
+    }
+  };
 
   return (
     <View style={Styles.container}>
@@ -52,7 +71,11 @@ const EditTask = ({ route }) => {
           onChangeText={(text) => setNewPriority(text)}
         />
 
-        <TouchableOpacity onPress={handleSaveChanges}>
+        <TouchableOpacity
+          onPress={() => {
+            handleSaveChanges();
+          }}
+        >
           <Text style={Styles.button}>Save Changes</Text>
         </TouchableOpacity>
       </View>
@@ -92,15 +115,15 @@ const Styles = StyleSheet.create({
     outlineStyle: "none",
     paddingVertical: 5,
     paddingHorizontal: 8,
-    width: "65%",
+    width: "85%",
     marginVertical: 6,
     marginHorizontal: 6,
   },
   button: {
-    width: 250,
+    width: 200,
     textAlign: "center",
     backgroundColor: "seagreen",
-    paddingVertical: 6,
+    paddingVertical: 8,
     paddingHorizontal: 12,
     marginBottom: 8,
     borderRadius: 6,
