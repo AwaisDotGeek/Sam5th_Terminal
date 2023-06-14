@@ -6,6 +6,7 @@ import CreateTask from "./screens/CreateTask";
 import FileContentScreen from "./screens/AsyncStorageData";
 import TasksList from "./screens/TasksList";
 import TaskDetails from "./screens/TaskDetails";
+import EditTask from "./screens/EditTask";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,11 @@ const App = () => {
           name="Tasks"
           component={TasksList}
           options={{ title: "Tasks" }}
+        />
+        <Stack.Screen
+          name="EditTask"
+          component={EditTask}
+          options={{ title: "Edit Task" }}
         />
         <Stack.Screen
           name="TaskDetails"

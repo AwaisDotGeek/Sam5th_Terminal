@@ -26,6 +26,10 @@ const TasksList = ({ navigation }) => {
     fetchData();
   }, []);
 
+  const handleEditClick = (item) => {
+    navigation.navigate("EditTask", { item: item });
+  };
+
   const handleDetailsClick = (item) => {
     navigation.navigate("TaskDetails", { item: item });
   };
@@ -36,7 +40,7 @@ const TasksList = ({ navigation }) => {
         <Text style={Styles.taskTitle}>{item.title}</Text>
         <Text style={Styles.taskDueDate}>{item.dueDate}</Text>
         <Text style={Styles.taskPriority}>{item.priority}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleEditClick(item)}>
           <Text style={[Styles.button, { backgroundColor: "limegreen" }]}>
             Edit
           </Text>

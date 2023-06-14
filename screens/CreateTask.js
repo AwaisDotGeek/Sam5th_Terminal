@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -16,15 +16,20 @@ const CreateTask = ({ navigation }) => {
 
   const handleCreate = async () => {
     try {
+      const existingTasks = await AsyncStorage.getItem("Tasks");
+      let id = 1;
+      if (existingTasks) {
+        let tasksLength = JSON.parse(existingTasks).length;
+        const newId = tasksLength + 1;
+        id = newId;
+      }
       const task = {
+        id,
         title,
         description,
         dueDate,
         priority,
       };
-
-      // Retrieve existing tasks from AsyncStorage
-      const existingTasks = await AsyncStorage.getItem("Tasks");
 
       if (existingTasks) {
         let tasks = JSON.parse(existingTasks);
@@ -45,35 +50,37 @@ const CreateTask = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Task Details</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter title here"
-        value={title}
-        onChangeText={(text) => setTitle(text)}
-      />
-      <TextInput
-        style={[styles.input, styles.longText]}
-        placeholder="Enter description here"
-        multiline
-        value={description}
-        onChangeText={(text) => setDescription(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Due date (MM/DD)"
-        value={dueDate}
-        onChangeText={(text) => setDueDate(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Priority level (1 - 10)"
-        value={priority}
-        onChangeText={(text) => setPriority(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleCreate}>
-        <Text>Create</Text>
-      </TouchableOpacity>
+      <View style={styles.innerContainer}>
+        <Text style={styles.title}>Task Details</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter title here"
+          value={title}
+          onChangeText={(text) => setTitle(text)}
+        />
+        <TextInput
+          style={[styles.input, styles.longText]}
+          placeholder="Enter description here"
+          multiline
+          value={description}
+          onChangeText={(text) => setDescription(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Due date (MM/DD)"
+          value={dueDate}
+          onChangeText={(text) => setDueDate(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Priority level (1 - 10)"
+          value={priority}
+          onChangeText={(text) => setPriority(text)}
+        />
+        <TouchableOpacity onPress={handleCreate}>
+          <Text style={styles.button}>Create</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -81,10 +88,25 @@ const CreateTask = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  innerContainer: {
+    backgroundColor: "#fff",
+    gap: 5,
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    gap: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    elevation: 10,
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 4,
   },
   title: {
     fontSize: 22,
@@ -99,38 +121,22 @@ const styles = StyleSheet.create({
     outlineStyle: "none",
     paddingVertical: 5,
     paddingHorizontal: 8,
-    width: "65%",
+    width: "85%",
   },
   longText: {
-    height: 100,
-  },
-  datePicker: {
-    width: "65%",
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#333",
-    borderRadius: 5,
-    paddingVertical: 5,
-  },
-  datePickerInput: {
-    borderWidth: 0,
-    alignItems: "flex-start",
-    paddingLeft: 8,
-  },
-  datePickerPlaceholder: {
-    color: "#999",
-  },
-  datePickerText: {
-    color: "#000",
+    height: 120,
   },
   button: {
     width: 200,
     textAlign: "center",
-    backgroundColor: "#f4511e",
+    backgroundColor: "seagreen",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 6,
     marginTop: 10,
+    color: "#fff",
+    fontWeight: "bold",
+    letterSpacing: 0.5,
   },
 });
 
