@@ -1,20 +1,102 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import CreateTask from "./screens/CreateTask";
+import FileContentScreen from "./screens/AsyncStorageData";
+import TasksList from "./screens/TasksList";
+import TaskDetails from "./screens/TaskDetails";
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CreateTask"
+          component={CreateTask}
+          options={{ title: "Create Task" }}
+        />
+        <Stack.Screen
+          name="Tasks"
+          component={TasksList}
+          options={{ title: "Tasks" }}
+        />
+        <Stack.Screen
+          name="TaskDetails"
+          component={TaskDetails}
+          options={{ title: "Task Details" }}
+        />
+        <Stack.Screen
+          name="AsyncStorageData"
+          component={FileContentScreen}
+          options={{ title: "All Data" }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.heading}>Aamirs' Home Screen</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("CreateTask")}
+      >
+        <Text style={styles.buttonText}>Create Task</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Tasks")}
+      >
+        <Text style={styles.buttonText}>Tasks</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("AsyncStorageData")}
+      >
+        <Text style={styles.buttonText}>Async Storage Data</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  button: {
+    width: 250,
+    textAlign: "center",
+    backgroundColor: "#f4511e",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    marginBottom: 8,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
+
+export default App;
