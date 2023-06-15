@@ -1,11 +1,34 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 const Settings = () => {
   const [theme, setTheme] = useState("light");
 
+  useEffect(() => {
+    const fetchTheme = async () => {
+      try {
+        const getTheme = await AsyncStorage.getItem("theme");
+        if (!getTheme) {
+          await AsyncStorage.setItem("theme", theme);
+        }
+      } catch (error) {
+        alert("Error getting theme! Error: " + error);
+      }
+    };
+
+    fetchTheme();
+  }, []);
+
   const handleSwicthTheme = async () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    try {
+      const globalThemeToSet = theme === "light" ? "dark" : "light";
+      await AsyncStorage.setItem("theme", globalThemeToSet);
+    } catch (error) {
+      alert("Error saving theme! Error: ", error);
+    }
   };
 
   return (
